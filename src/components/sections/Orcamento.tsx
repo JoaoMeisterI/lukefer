@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { SITE, whatsappUrl } from '../../data/site';
+import { IMG } from '../../data/imagens';
+import { Foto } from '../ui/Foto';
 import { useReducedMotion } from '../../hooks';
 import { gerarProtocolo, maskPhone, num } from '../../lib/format';
 import { CHAVES, ler, remover, salvar } from '../../lib/storage';
@@ -246,8 +248,11 @@ export function Orcamento() {
   const tipoLabel = TIPOS_OBRA.find((t) => t.id === dados.tipo)?.label ?? dados.tipo;
 
   return (
-    <section id="contato" className="lk-section lk-orc lk-cv" aria-labelledby="orc-titulo">
-      <div className="lk-grid-bg lk-orc__bg" aria-hidden="true" />
+    <section id="contato" className="lk-section lk-orc lk-dark" aria-labelledby="orc-titulo">
+      <div className="lk-orc__midia">
+        <Foto img={IMG.tesouras} sizes="100vw" className="lk-orc__foto" alt="" />
+        <span className="lk-orc__veu" aria-hidden="true" />
+      </div>
       <div className="lk-container">
         <header className="lk-section__head lk-section__head--center">
           <Eyebrow centro>Orçamento</Eyebrow>

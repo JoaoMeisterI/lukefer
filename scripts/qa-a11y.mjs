@@ -133,20 +133,23 @@ await new Promise((res) => setTimeout(res, 1500));
 
 r = await b.avaliar(() => {
   const trilho = document.querySelector('.lk-marquee__trilho');
-  const po = document.querySelector('.lk-po--f3');
-  const svgHero = document.querySelector('.lk-portico');
+  const heroFoto = document.querySelector('.lk-hero__foto');
+  const reveals = [...document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .reveal-scale')];
+  const invisiveis = reveals.filter((el) => parseFloat(getComputedStyle(el).opacity) < 0.95).length;
+  const etapaFoto = document.querySelector('.lk-etapa__foto');
   return {
     marqueeAnim: getComputedStyle(trilho).animationName,
     marqueeDur: getComputedStyle(trilho).animationDuration,
-    heroVisivel: svgHero ? svgHero.getBoundingClientRect().height > 50 : false,
-    poOpacidade: po ? getComputedStyle(po).opacity : '?',
-    poDash: po ? getComputedStyle(po).strokeDashoffset : '?',
-    transicaoReveal: getComputedStyle(document.querySelector('.reveal') || document.body).transitionDuration,
+    heroVisivel: heroFoto ? heroFoto.getBoundingClientRect().height > 200 : false,
+    reveals: reveals.length,
+    invisiveis,
+    etapaTransicao: etapaFoto ? getComputedStyle(etapaFoto).transitionDuration : '?',
   };
 });
 checar('reduced-motion: marquee parado', r.marqueeAnim === 'none' || parseFloat(r.marqueeDur) < 0.01, `${r.marqueeAnim} ${r.marqueeDur}`);
-checar('reduced-motion: estrutura do hero visível', r.heroVisivel && r.poOpacidade === '1', `op=${r.poOpacidade}`);
-checar('reduced-motion: line-draw já desenhado', r.poDash === '0' || r.poDash === '0px', r.poDash);
+checar('reduced-motion: foto do hero visível', r.heroVisivel);
+checar('reduced-motion: nenhum conteúdo preso invisível', r.invisiveis === 0, `${r.invisiveis} de ${r.reveals} com opacity 0`);
+checar('reduced-motion: transições zeradas', parseFloat(r.etapaTransicao) < 0.01, r.etapaTransicao);
 
 await b.send('Emulation.setEmulatedMedia', { features: [] });
 

@@ -20,24 +20,27 @@ npm run typecheck  # TypeScript sem emitir
 
 ## O que tem dentro
 
-Página única, 14 blocos, construída como derrubada sequencial de objeções:
+**v2 — base clara, peso fotográfico.** A primeira versão era escura de ponta a ponta com ilustração vetorial, e caiu no visual padrão de SaaS. A referência que o cliente trouxe (manufatura italiana) mostrou o caminho certo: base branca, foto carregando o peso, aresta viva, um acento quente e um objeto técnico grande sobre o branco.
+
+Página única, 15 blocos, construída como derrubada sequencial de objeções:
 
 | # | Seção | Interação |
 |---|---|---|
-| 01 | Hero | Animação SVG de montagem do pórtico, em 7 fases |
-| 02 | Segmentos | Marquee contínuo, pausa no hover |
-| 03 | Soluções | Bento de 6 cards + modal com ficha técnica |
-| 04 | Metálica x Concreto | Barras animadas + toggle de cenário |
-| 05 | Vão livre | **Corte SVG paramétrico** controlado por slider de 12 a 40 m |
-| 06 | Processo | Timeline com linha que se preenche no scroll |
-| 07 | Números | Contadores animados, uma vez só |
-| 08 | Projetos | Filtro por categoria + lightbox com teclado |
-| 09 | Simulador | Calculadora que recalcula ao vivo e empurra os dados para o formulário |
-| 10 | A Fábrica | Cena SVG com ponte rolante e faíscas de solda |
-| 11 | Depoimentos | Carrossel com swipe por toque, setas e dots |
-| 12 | FAQ | Acordeão, um aberto por vez |
-| 13 | Orçamento | Formulário de 3 etapas, validação, rascunho em `localStorage`, protocolo |
-| 14 | Footer | — |
+| 01 | Hero | Foto full-bleed, título embaixo à esquerda |
+| 02 | Segmentos | Marquee contínuo em faixa escura, pausa no hover |
+| 03 | Pilares | Três colunas, ícone de traço fino, muito ar |
+| 04 | **Etapas** | **Quatro ladrilhos de foto em P&B que ganham cor no hover** — bloco de assinatura |
+| 05 | Vão livre | **Corte SVG paramétrico** com slider de 12 a 40 m, sobre o branco |
+| 06 | Metálica x Concreto | Barras animadas + toggle de cenário |
+| 07 | Soluções | Bento de 6 cards + modal com ficha técnica |
+| 08 | Processo | Timeline com linha que se preenche no scroll |
+| 09 | Projetos | Nove obras em foto, filtro por categoria + lightbox com teclado |
+| 10 | Números | Faixa escura sobre foto, contadores animados |
+| 11 | Simulador | Calculadora ao vivo que empurra os dados para o formulário |
+| 12 | A Fábrica | Escuro, split com foto da fabricação |
+| 13 | Depoimentos | Carrossel com swipe por toque, setas e dots |
+| 14 | FAQ | Acordeão, um aberto por vez |
+| 15 | Orçamento | Formulário de 3 etapas sobre foto, rascunho em `localStorage`, protocolo |
 
 Mais: header com progresso de leitura e link ativo, drawer mobile, WhatsApp flutuante, voltar ao topo e toasts.
 
@@ -51,13 +54,30 @@ Mais: header com progresso de leitura e link ativo, drawer mobile, WhatsApp flut
 | UI | React 19 + TypeScript |
 | Estilo | CSS puro com custom properties |
 | Animação | CSS + IntersectionObserver |
-| Ícones e ilustrações | SVG autorais inline |
+| Ícones e desenho técnico | SVG autorais inline |
+| Fotografia | 18 imagens, WebP em duas larguras com `srcset` |
 
 **Dependências de produção: `react` e `react-dom`. Mais nada.**
 
 Nenhuma biblioteca de animação. Framer Motion custaria ~40 KB e colocaria uma camada de JS entre o navegador e o compositor — num site que precisa ser impecável no Safari do iPhone, isso é risco sem retorno. Todo movimento é `transform`/`opacity` em CSS, mais `stroke-dashoffset` para o desenho de linha.
 
-**Saída da build:** JS ≈ 100 KB gzip · CSS ≈ 11 KB gzip.
+**Saída da build:** JS ≈ 98 KB gzip · CSS ≈ 10 KB gzip · imagens 2,5 MB (eram 47 MB em PNG).
+
+### Imagens
+
+Os originais são PNG de 1536px. `scripts/preparar-imagens.mjs` converte tudo para WebP em duas larguras e renomeia pelo papel na página:
+
+```bash
+node scripts/preparar-imagens.mjs <pasta-com-os-png>
+```
+
+O componente `<Foto>` monta o `srcset`, grava `width`/`height` para reservar a caixa (sem CLS) e marca o hero como `fetchpriority="high"`. Todo o resto é `loading="lazy"`.
+
+### Tema claro e escuro na mesma página
+
+A base é clara. Blocos escuros recebem a classe `.lk-dark`, que **remapeia os tokens de cor** em vez de duplicar regra por regra — tudo dentro do bloco se inverte sozinho.
+
+Uma armadilha vale registro: dentro de `.lk-dark`, os valores precisam ser **literais**. Escrever `--lk-paper: var(--lk-ink)` faz o CSS resolver para o `--lk-ink` *novo* (claro), e fundo e texto saem da mesma cor. Foi exatamente o que aconteceu com a seção Fábrica, e só a auditoria de contraste pegou.
 
 ---
 
@@ -93,7 +113,8 @@ npm run preview -- --port 4199 --host 127.0.0.1
 # 3. roda a bateria
 node scripts/qa-overflow.mjs   # estouro horizontal em 8 larguras
 node scripts/qa-funcional.mjs  # 37 checagens de interação
-node scripts/qa-a11y.mjs       # 19 checagens de acessibilidade e iOS
+node scripts/qa-a11y.mjs       # 20 checagens de acessibilidade e iOS
+node scripts/qa-contraste.mjs  # razão WCAG de cada nó de texto da página
 ```
 
 ### Resultado da última execução
@@ -102,11 +123,20 @@ node scripts/qa-a11y.mjs       # 19 checagens de acessibilidade e iOS
 |---|---|
 | Estouro horizontal — 320, 360, 375, 390, 430, 768, 1024, 1440 px | **0 estouro em todas** |
 | Funcional — drawer, âncoras, filtro, lightbox, toggle, slider, FAQ, carrossel, simulador, formulário | **37/37** |
-| Acessibilidade e iOS — alvos de toque, fontes de campo, headings, labels, reduced-motion, teclado | **19/19** |
+| Acessibilidade e iOS — alvos de toque, fontes de campo, headings, labels, reduced-motion, teclado | **20/20** |
+| Contraste — 1.281 nós de texto medidos contra o fundo efetivo | **0 abaixo de WCAG AA** |
 
 ---
 
 ## Bugs reais que a bateria pegou
+
+### Na v2 (base clara)
+
+1. **Fundo e texto da mesma cor na seção Fábrica.** `--lk-paper: var(--lk-ink)` dentro de `.lk-dark` resolve para o `--lk-ink` redefinido no mesmo bloco. Razão de contraste exatamente 1:1 — invisível em teste visual rápido porque a seção simplesmente parecia vazia. Uma causa raiz, seis falhas de contraste.
+2. **Branco sobre o verde do WhatsApp dava 4,32:1**, logo abaixo do mínimo de 4,5. Verde escurecido.
+3. **Rótulos de uma e duas linhas desalinhavam os valores** no vão livre e os quatro títulos dos ladrilhos. Resolvido com `min-height` em linhas, não com altura fixa em px.
+
+### Na v1 (base escura)
 
 Vale registrar, porque nenhum deles aparece olhando a tela parada:
 

@@ -61,6 +61,7 @@ export function Simulador() {
   return (
     <Section
       id="simulador"
+      className="lk-section--sand"
       eyebrow="Simulador"
       titulo={
         <>
@@ -68,7 +69,7 @@ export function Simulador() {
         </>
       }
       lead="Preencha as medidas e veja faixa de investimento, prazo e peso de aço. É estimativa — o número final sai do projeto."
-      className="lk-cv"
+      
     >
       <div className="lk-sim">
         <Reveal className="lk-sim__entradas" efeito="left">

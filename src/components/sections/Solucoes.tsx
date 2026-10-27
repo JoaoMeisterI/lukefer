@@ -35,7 +35,7 @@ export function Solucoes() {
         </>
       }
       lead="Cada projeto nasce do uso. A gente desenha a estrutura em volta da sua operação — não o contrário."
-      className="lk-cv"
+      
     >
       <ul className="lk-bento">
         {SOLUCOES.map((s, i) => {

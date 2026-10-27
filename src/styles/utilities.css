@@ -1,5 +1,7 @@
 /* ============================================================
    LUKEFER — Utilidades, layout e sistema de revelação
+   Tudo escrito com tokens, para que um bloco .lk-dark se
+   inverta sozinho sem duplicar regra.
    ============================================================ */
 
 /* ---------- Container ---------- */
@@ -17,7 +19,12 @@
 .lk-section {
   position: relative;
   padding-block: var(--section-pad);
-  scroll-margin-top: calc(var(--header-h) + 16px);
+  scroll-margin-top: calc(var(--header-h) + 8px);
+  background: var(--lk-paper);
+}
+
+.lk-section--sand {
+  background: var(--lk-sand);
 }
 
 .lk-section--tight {
@@ -25,7 +32,7 @@
 }
 
 .lk-section__head {
-  max-width: 68ch;
+  max-width: 62ch;
   margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
@@ -37,9 +44,9 @@
 .lk-lead {
   margin-top: var(--sp-5);
   font-size: var(--fs-lead);
-  color: var(--lk-silver-400);
+  color: var(--lk-ash);
   line-height: 1.6;
-  max-width: 62ch;
+  max-width: 56ch;
 }
 
 .lk-section__head--center .lk-lead {
@@ -56,51 +63,59 @@
   font-family: var(--ff-mono);
   font-size: var(--fs-eyebrow);
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--lk-gold-500);
+  color: var(--lk-gold);
 }
 
 .lk-eyebrow::before {
   content: '';
   width: 0;
-  height: 1px;
-  background: var(--lk-gold-500);
+  height: 2px;
+  background: var(--lk-gold-fill);
   transition: width var(--d-enter) var(--ease-out-expo) 120ms;
 }
 
 .lk-eyebrow.is-visible::before,
 .is-visible .lk-eyebrow::before {
-  width: 32px;
+  width: 28px;
 }
 
 .lk-eyebrow--center {
   justify-content: center;
 }
 
-/* ---------- Grifo dourado ---------- */
+/* ---------- Título display: fino gigante + forte ---------- */
 
-.lk-gold {
-  background: var(--grad-gold);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  /* fallback caso background-clip:text falhe */
-  -webkit-text-fill-color: transparent;
-  /* a caixa de clip corta o último glifo em fontes com sidebearing negativo;
-     a folga é devolvida pela margem negativa, então o layout não muda */
-  padding-inline-end: 0.08em;
-  margin-inline-end: -0.08em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+.lk-display {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--fs-display);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 0;
 }
 
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .lk-gold {
-    color: var(--lk-gold-500);
-    -webkit-text-fill-color: currentColor;
-    background: none;
-  }
+.lk-display__fino {
+  font-weight: 300;
+  color: var(--lk-ink);
+}
+
+.lk-display__forte {
+  font-weight: 800;
+  color: var(--lk-ink);
+}
+
+/* ---------- Acento ---------- */
+
+.lk-gold {
+  color: var(--lk-gold);
+}
+
+/* o <em> vira acento de cor, não itálico */
+em {
+  font-style: normal;
+  color: var(--lk-gold);
 }
 
 /* ---------- Mono ---------- */
@@ -125,16 +140,16 @@
 }
 
 .reveal {
-  transform: translate3d(0, 24px, 0);
+  transform: translate3d(0, 22px, 0);
 }
 .reveal-l {
-  transform: translate3d(-24px, 0, 0);
+  transform: translate3d(-22px, 0, 0);
 }
 .reveal-r {
-  transform: translate3d(24px, 0, 0);
+  transform: translate3d(22px, 0, 0);
 }
 .reveal-scale {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 
 .reveal.is-visible,
@@ -155,35 +170,15 @@
   }
 }
 
-/* ---------- Texturas de fundo ---------- */
-
-.lk-grid-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(58, 64, 71, 0.5) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(58, 64, 71, 0.5) 1px, transparent 1px);
-  background-size: 80px 80px;
-  opacity: 0.22;
-  -webkit-mask-image: radial-gradient(100% 70% at 50% 0%, #000 0%, transparent 75%);
-  mask-image: radial-gradient(100% 70% at 50% 0%, #000 0%, transparent 75%);
-}
-
-.lk-vignette {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: var(--grad-vignette);
-}
+/* ---------- Régua ---------- */
 
 .lk-hairline {
   height: 1px;
   border: 0;
-  background: linear-gradient(90deg, transparent, var(--lk-steel-700) 20%, var(--lk-steel-700) 80%, transparent);
+  background: var(--lk-line);
 }
 
-/* ---------- Botões ---------- */
+/* ---------- Botões: aresta viva ---------- */
 
 .lk-btn {
   position: relative;
@@ -191,21 +186,19 @@
   align-items: center;
   justify-content: center;
   gap: var(--sp-2);
-  min-height: 48px;
+  min-height: 50px;
   padding: 0 var(--sp-6);
-  border-radius: var(--r-full);
+  border-radius: var(--r-sm);
   font-family: var(--ff-body);
-  font-size: var(--fs-body);
+  font-size: 0.9375rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
   white-space: nowrap;
   cursor: pointer;
   transition:
     background-color var(--d-micro) var(--ease-snap),
     border-color var(--d-micro) var(--ease-snap),
     color var(--d-micro) var(--ease-snap),
-    box-shadow var(--d-micro) var(--ease-snap),
-    filter var(--d-micro) var(--ease-snap),
     transform 80ms ease-out,
     opacity var(--d-micro) var(--ease-snap);
 }
@@ -214,31 +207,30 @@
   transform: translateY(1px);
 }
 
+/* dourado sólido com texto escuro: 6.3:1, funciona nos dois fundos */
 .lk-btn--primary {
-  background: var(--grad-gold);
-  color: var(--lk-ink);
-  box-shadow: var(--sh-2);
+  background: var(--lk-gold-fill);
+  color: #16181a;
 }
 
 .lk-btn--secondary {
-  border: 1px solid var(--lk-steel-700);
-  color: var(--lk-white);
-  background: rgba(26, 29, 33, 0.5);
+  border: 1px solid var(--lk-line-forte);
+  color: var(--lk-ink);
+  background: transparent;
 }
 
 .lk-btn--ghost {
-  color: var(--lk-silver-200);
-  padding-inline: var(--sp-4);
+  color: var(--lk-gold);
+  padding-inline: var(--sp-3);
 }
 
 .lk-btn--whatsapp {
-  background: #1fa855;
+  background: #0b6e36;
   color: #fff;
-  box-shadow: var(--sh-2);
 }
 
 .lk-btn--sm {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 var(--sp-5);
   font-size: var(--fs-sm);
 }
@@ -249,18 +241,18 @@
 
 @media (hover: hover) and (pointer: fine) {
   .lk-btn--primary:hover:not(:disabled) {
-    filter: brightness(1.08);
-    box-shadow: var(--sh-gold);
+    background: #a2762f;
   }
   .lk-btn--secondary:hover:not(:disabled) {
-    border-color: var(--lk-gold-700);
-    background: var(--lk-steel-900);
+    border-color: var(--lk-ink);
+    background: var(--lk-ink);
+    color: var(--lk-paper);
   }
   .lk-btn--ghost:hover:not(:disabled) {
-    color: var(--lk-white);
+    color: var(--lk-ink);
   }
   .lk-btn--whatsapp:hover:not(:disabled) {
-    filter: brightness(1.08);
+    background: #095a2c;
   }
 }
 
@@ -280,24 +272,23 @@
 
 .lk-card {
   position: relative;
-  background: var(--lk-graphite);
-  border: 1px solid var(--lk-steel-700);
-  border-radius: var(--r-lg);
+  background: var(--lk-paper);
+  border: 1px solid var(--lk-line);
+  border-radius: var(--r-md);
   padding: var(--sp-6);
   transition:
     border-color 220ms var(--ease-snap),
-    background-color 220ms var(--ease-snap);
-  overflow: hidden;
+    box-shadow 220ms var(--ease-snap);
 }
 
 .lk-card::after {
   content: '';
   position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 100%;
-  background: var(--grad-gold);
+  left: -1px;
+  bottom: -1px;
+  height: 3px;
+  width: calc(100% + 2px);
+  background: var(--lk-gold-fill);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 320ms var(--ease-out-expo);
@@ -305,8 +296,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .lk-card--interactive:hover {
-    border-color: var(--lk-gold-700);
-    background: var(--lk-steel-900);
+    border-color: var(--lk-line-forte);
+    box-shadow: var(--sh-2);
   }
   .lk-card--interactive:hover::after {
     transform: scaleX(1);
@@ -315,26 +306,6 @@
 
 .lk-card--interactive:focus-visible::after {
   transform: scaleX(1);
-}
-
-/* ---------- Pílula ---------- */
-
-.lk-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
-  padding: var(--sp-2) var(--sp-4);
-  border: 1px solid var(--lk-steel-700);
-  border-radius: var(--r-full);
-  background: rgba(18, 20, 23, 0.7);
-  font-size: var(--fs-sm);
-  color: var(--lk-silver-200);
-}
-
-.lk-pill--gold {
-  border-color: rgba(200, 164, 92, 0.35);
-  color: var(--lk-gold-300);
-  background: rgba(92, 71, 32, 0.18);
 }
 
 /* ---------- Grid helpers ---------- */
@@ -357,14 +328,4 @@
   .lk-grid--4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-}
-
-/* ---------- Performance: seções fora da dobra ----------
-   `content-visibility: auto` foi avaliado e DESCARTADO: ele faz o
-   getBoundingClientRect de seções ainda não renderizadas usar o tamanho
-   intrínseco estimado, o que erra o destino da navegação por âncora numa
-   página única. A classe fica como gancho de layout. */
-
-.lk-cv {
-  contain: layout style;
 }

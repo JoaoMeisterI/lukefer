@@ -72,6 +72,7 @@ export function Depoimentos() {
   return (
     <Section
       id="depoimentos"
+      className="lk-section--sand"
       eyebrow="Depoimentos"
       titulo={
         <>
@@ -79,7 +80,7 @@ export function Depoimentos() {
         </>
       }
       centro
-      className="lk-cv"
+      
     >
       <div
         className="lk-carrossel"

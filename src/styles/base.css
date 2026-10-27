@@ -19,12 +19,12 @@ html {
   /* iOS: impede o Safari de aumentar fontes sozinho em paisagem */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* clip (e não hidden) para não criar contexto de scroll e quebrar position:sticky */
+  /* clip (e nao hidden) para nao criar contexto de scroll e quebrar position:sticky */
   overflow-x: clip;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-/* Safari < 16 não entende overflow: clip */
+/* Safari < 16 nao entende overflow: clip */
 @supports not (overflow: clip) {
   html {
     overflow-x: hidden;
@@ -36,15 +36,14 @@ body {
   min-height: 100%;
   overflow-x: clip;
   max-width: 100%;
-  background: var(--lk-ink);
-  color: var(--lk-silver-200);
+  background: var(--lk-paper);
+  color: var(--lk-ash);
   font-family: var(--ff-body);
   font-size: var(--fs-body);
-  line-height: 1.65;
+  line-height: 1.6;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 img,
@@ -68,31 +67,32 @@ h4,
 h5,
 h6 {
   font-family: var(--ff-display);
-  color: var(--lk-white);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.03;
+  color: var(--lk-ink);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
   text-wrap: balance;
 }
 
 h1 {
   font-size: var(--fs-hero);
-  line-height: 0.98;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
 }
 h2 {
   font-size: var(--fs-h2);
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 h3 {
   font-size: var(--fs-h3);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 h4 {
   font-size: var(--fs-h4);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
 }
 
 p {
@@ -107,7 +107,7 @@ a {
 strong,
 b {
   font-weight: 700;
-  color: var(--lk-white);
+  color: var(--lk-ink);
 }
 
 /* ---------- Controles ---------- */
@@ -131,7 +131,7 @@ summary {
   user-select: none;
 }
 
-/* iOS: qualquer fonte menor que 16px em campo dispara zoom automático */
+/* iOS: qualquer fonte menor que 16px em campo dispara zoom automatico */
 input,
 select,
 textarea {
@@ -156,35 +156,37 @@ textarea:disabled {
 }
 
 :focus-visible {
-  outline: 2px solid var(--lk-gold-500);
+  outline: 2px solid var(--lk-gold);
   outline-offset: 3px;
-  border-radius: var(--r-sm);
 }
 
-/* ---------- Seleção ---------- */
+/* ---------- Selecao ---------- */
 
 ::selection {
-  background: var(--lk-gold-700);
-  color: var(--lk-white);
+  background: var(--lk-ink);
+  color: var(--lk-paper);
+}
+
+.lk-dark ::selection {
+  background: var(--lk-gold-light);
+  color: var(--lk-coal);
 }
 
 /* ---------- Scrollbar (desktop) ---------- */
 
 @media (hover: hover) and (pointer: fine) {
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 11px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--lk-ink);
+    background: var(--lk-sand);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--lk-steel-700);
-    border-radius: var(--r-full);
-    border: 2px solid var(--lk-ink);
+    background: var(--lk-line-forte);
+    border: 3px solid var(--lk-sand);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--lk-steel-500);
+    background: var(--lk-ash-claro);
   }
 }
 
@@ -208,10 +210,9 @@ textarea:disabled {
   left: var(--sp-2);
   z-index: var(--z-toast);
   padding: var(--sp-3) var(--sp-5);
-  background: var(--lk-gold-500);
-  color: var(--lk-ink);
+  background: var(--lk-ink);
+  color: #fff;
   font-weight: 600;
-  border-radius: var(--r-md);
   transform: translateY(calc(-100% - var(--sp-4)));
   transition: transform var(--d-base) var(--ease-out-expo);
 }
@@ -236,7 +237,7 @@ textarea:disabled {
   }
 }
 
-/* ---------- Sem JS: nunca esconder conteúdo ---------- */
+/* ---------- Sem JS: nunca esconder conteudo ---------- */
 
 .no-js .reveal,
 .no-js .reveal-l,
@@ -248,8 +249,8 @@ textarea:disabled {
 
 .lk-noscript {
   padding: var(--sp-5);
-  background: var(--lk-gold-900);
-  color: var(--lk-white);
+  background: var(--lk-ink);
+  color: #fff;
   text-align: center;
   font-size: var(--fs-sm);
 }

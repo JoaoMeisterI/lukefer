@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Header } from './components/sections/Header';
 import { Hero } from './components/sections/Hero';
+import { Pilares } from './components/sections/Pilares';
+import { Etapas } from './components/sections/Etapas';
 import { Solucoes } from './components/sections/Solucoes';
 import { Comparativo } from './components/sections/Comparativo';
 import { VaoLivreSection } from './components/sections/VaoLivreSection';
@@ -54,12 +56,14 @@ export default function App() {
 
       <main id="conteudo">
         <Hero />
-        <Solucoes />
-        <Comparativo />
+        <Pilares />
+        <Etapas />
         <VaoLivreSection />
+        <Comparativo />
+        <Solucoes />
         <Processo />
-        <Numeros />
         <Projetos />
+        <Numeros />
         <Simulador />
         <Fabrica />
         <Depoimentos />

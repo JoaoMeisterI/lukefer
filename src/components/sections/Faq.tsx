@@ -10,13 +10,14 @@ export function Faq() {
   return (
     <Section
       id="faq"
+      className="lk-section--sand"
       eyebrow="Dúvidas"
       titulo={
         <>
           O que perguntam <span className="lk-gold">antes de fechar</span>.
         </>
       }
-      className="lk-cv"
+      
     >
       <ul className="lk-faq">
         {FAQ.map((item, i) => {

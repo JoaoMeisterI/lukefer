@@ -3,8 +3,8 @@ import { scrollToSection } from '../../hooks';
 import { num } from '../../lib/format';
 import { pilaresEliminados, usoRecomendado } from '../../lib/simulador';
 import { VaoLivre } from '../art/VaoLivre';
-import { IconArrow, IconSpan } from '../icons';
-import { Button, Reveal, Section } from '../ui';
+import { IconArrow } from '../icons';
+import { Button, Eyebrow, Reveal } from '../ui';
 
 const MIN = 12;
 const MAX = 40;
@@ -16,31 +16,37 @@ export function VaoLivreSection() {
   const pilares = pilaresEliminados(vao);
 
   return (
-    <Section
-      id="vao"
-      eyebrow="Vão livre"
-      titulo={
-        <>
-          Mais liberdade para o <span className="lk-gold">seu negócio</span>.
-        </>
-      }
-      lead="Pilar no meio do galpão é metro quadrado que você paga e não usa. Arraste e veja o que muda."
-      className="lk-cv"
-    >
-      <div className="lk-vao">
-        <Reveal className="lk-vao__arte" efeito="scale">
-          <VaoLivre vao={vao} />
-        </Reveal>
+    <section id="vao" className="lk-section lk-vao" aria-labelledby="vao-titulo">
+      <div className="lk-container">
+        <div className="lk-vao__topo">
+          <Reveal className="lk-vao__intro">
+            <Eyebrow>Vão livre</Eyebrow>
+            <h2 id="vao-titulo" className="lk-display">
+              <span className="lk-display__fino">Vão livre</span>
+              <span className="lk-display__forte">sem pilar no meio.</span>
+            </h2>
+            <p className="lk-lead">
+              Pilar no meio do galpão é metro quadrado que você paga e não usa. Arraste a medida e
+              veja o que muda na prática.
+            </p>
+          </Reveal>
 
-        <Reveal className="lk-vao__painel" efeito="right" delay={1}>
+          <Reveal className="lk-vao__arte" efeito="scale" delay={1}>
+            <VaoLivre vao={vao} />
+          </Reveal>
+        </div>
+
+        <Reveal className="lk-vao__base" delay={1}>
           <div className="lk-vao__controle">
-            <label className="lk-vao__label" htmlFor="slider-vao">
-              <IconSpan width={20} height={20} />
-              Largura do vão livre
-            </label>
-            <output className="lk-vao__output lk-mono" htmlFor="slider-vao">
-              {vao} <small>m</small>
-            </output>
+            <div className="lk-vao__controle-topo">
+              <label className="lk-vao__label" htmlFor="slider-vao">
+                Largura do vão livre
+              </label>
+              <output className="lk-vao__output lk-mono" htmlFor="slider-vao">
+                {vao}
+                <small>m</small>
+              </output>
+            </div>
             <input
               id="slider-vao"
               className="lk-range"
@@ -61,7 +67,9 @@ export function VaoLivreSection() {
           <dl className="lk-vao__dados">
             <div>
               <dt>Área útil por módulo</dt>
-              <dd className="lk-mono">{num(areaModulo)} m²</dd>
+              <dd className="lk-mono">
+                {num(areaModulo)} <small>m²</small>
+              </dd>
             </div>
             <div>
               <dt>Pilares internos eliminados</dt>
@@ -69,7 +77,7 @@ export function VaoLivreSection() {
             </div>
             <div className="lk-vao__dados--full">
               <dt>Uso recomendado</dt>
-              <dd>{usoRecomendado(vao)}</dd>
+              <dd className="lk-vao__uso">{usoRecomendado(vao)}</dd>
             </div>
           </dl>
 
@@ -82,6 +90,6 @@ export function VaoLivreSection() {
           </Button>
         </Reveal>
       </div>
-    </Section>
+    </section>
   );
 }

@@ -5,7 +5,7 @@ import { Logo } from '../icons/Logo';
 
 export function Footer() {
   return (
-    <footer className="lk-footer" aria-labelledby="footer-titulo">
+    <footer className="lk-footer lk-dark" aria-labelledby="footer-titulo">
       <h2 id="footer-titulo" className="sr-only">
         Rodapé
       </h2>

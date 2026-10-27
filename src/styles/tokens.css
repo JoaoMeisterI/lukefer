@@ -1,47 +1,52 @@
 /* ============================================================
-   LUKEFER — Design Tokens
-   Fonte: docs/01-identidade-marca.md e docs/02-design-system.md
+   LUKEFER — Design Tokens  ·  v2, base CLARA
+   O escuro passou a ser acento: hero, faixas de foto, fábrica,
+   orçamento e rodapé. O resto respira em branco.
    ============================================================ */
 
 :root {
-  /* ---------- Cores: base escura ---------- */
-  --lk-ink: #0a0b0d;
-  --lk-graphite: #121417;
-  --lk-steel-900: #1a1d21;
-  --lk-steel-700: #272b31;
-  --lk-steel-500: #3a4047;
-  --lk-silver-400: #8a9099;
-  --lk-silver-200: #c2c8cf;
-  --lk-white: #f4f6f8;
+  /* ---------- Base clara ---------- */
+  --lk-paper: #ffffff;
+  --lk-sand: #f4f4f2; /* alternância de seção, levemente quente */
+  --lk-sand-2: #ebebe7;
+  --lk-line: #e3e3df; /* borda clara */
+  --lk-line-forte: #c9c9c3;
 
-  /* ---------- Cores: acento dourado/bronze ---------- */
-  --lk-gold-300: #e3c98a;
-  --lk-gold-500: #c8a45c;
-  --lk-gold-700: #9b7b3a;
-  --lk-gold-900: #5c4720;
+  /* ---------- Tinta ---------- */
+  --lk-ink: #16181a; /* texto primário e fundo escuro */
+  --lk-coal: #0e1011; /* fundo escuro profundo (rodapé) */
+  --lk-graphite: #1d2023; /* superfície escura elevada */
+  --lk-ash: #5f6166; /* texto secundário sobre claro — 6.4:1 */
+  --lk-ash-claro: #8b8d91; /* apoio sobre claro, nunca abaixo de 14px */
+
+  /* ---------- Sobre escuro ---------- */
+  --lk-paper-dim: #d6d8da;
+  --lk-ash-dark: #9b9ea3; /* texto secundário sobre escuro — 6.0:1 */
+  --lk-line-dark: #2e3236;
+
+  /* ---------- Acento dourado/bronze ----------
+     Três valores porque o mesmo dourado não serve nos dois fundos:
+     o claro precisa de um bronze escuro para passar no contraste. */
+  --lk-gold: #8a6520; /* texto e ícone SOBRE CLARO — 5.4:1 */
+  --lk-gold-fill: #b8893b; /* preenchimento sólido (botão) */
+  --lk-gold-light: #d9b874; /* texto SOBRE ESCURO — 8.9:1 */
+  --lk-gold-wash: #f6efe2; /* fundo tingido bem suave */
 
   /* ---------- Funcionais ---------- */
-  --lk-success: #4ade80;
-  --lk-danger: #f87171;
-  --lk-weld: #5ac8fa;
+  --lk-success: #1d7a46;
+  --lk-danger: #c0392b;
+  --lk-danger-dark: #ef8c82;
 
-  /* ---------- Gradientes ---------- */
-  --grad-steel: linear-gradient(135deg, #272b31 0%, #3a4047 50%, #1a1d21 100%);
-  --grad-gold: linear-gradient(135deg, #e3c98a 0%, #c8a45c 45%, #9b7b3a 100%);
-  --grad-sheen: linear-gradient(100deg, transparent 35%, rgba(227, 201, 138, 0.28) 50%, transparent 65%);
-  --grad-vignette: radial-gradient(120% 80% at 50% 0%, rgba(200, 164, 92, 0.1), transparent 60%);
+  /* ---------- Sombras: duras, de luz direta ---------- */
+  --sh-1: 0 1px 2px rgba(22, 24, 26, 0.08);
+  --sh-2: 0 4px 16px -4px rgba(22, 24, 26, 0.14);
+  --sh-3: 0 20px 48px -16px rgba(22, 24, 26, 0.26);
+  --sh-dark: 0 20px 48px -16px rgba(0, 0, 0, 0.7);
 
-  /* ---------- Sombras ---------- */
-  --sh-1: 0 1px 2px rgba(0, 0, 0, 0.6);
-  --sh-2: 0 8px 24px -8px rgba(0, 0, 0, 0.75);
-  --sh-3: 0 24px 60px -20px rgba(0, 0, 0, 0.85);
-  --sh-gold: 0 0 0 1px rgba(200, 164, 92, 0.35), 0 10px 30px -12px rgba(200, 164, 92, 0.3);
-
-  /* ---------- Raios ---------- */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 16px;
-  --r-xl: 24px;
+  /* ---------- Raios: aresta viva ---------- */
+  --r-sm: 2px;
+  --r-md: 3px;
+  --r-lg: 4px;
   --r-full: 999px;
 
   /* ---------- Espaçamento (base 4) ---------- */
@@ -61,11 +66,12 @@
   --ff-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --ff-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
-  --fs-hero: clamp(2.5rem, 1.55rem + 3.3vw, 4.5rem);
-  --fs-h2: clamp(2rem, 1.3rem + 3.2vw, 3.75rem);
-  --fs-h3: clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem);
-  --fs-h4: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
-  --fs-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
+  --fs-hero: clamp(2rem, 1.2rem + 2.9vw, 3.5rem);
+  --fs-display: clamp(2.25rem, 1.35rem + 3.3vw, 4rem); /* o título fino gigante */
+  --fs-h2: clamp(1.875rem, 1.25rem + 2.6vw, 3.25rem);
+  --fs-h3: clamp(1.25rem, 1.05rem + 0.9vw, 1.625rem);
+  --fs-h4: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  --fs-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
   --fs-body: 1rem;
   --fs-sm: 0.875rem;
   --fs-eyebrow: 0.75rem;
@@ -80,10 +86,10 @@
   --d-draw: 1400ms;
 
   /* ---------- Layout ---------- */
-  --container: 1280px;
-  --gutter: clamp(1.25rem, 5vw, 3rem);
-  --header-h: 68px;
-  --section-pad: clamp(4.5rem, 9vw, 9rem);
+  --container: 1240px;
+  --gutter: clamp(1.25rem, 5vw, 3.5rem);
+  --header-h: 64px;
+  --section-pad: clamp(4rem, 8vw, 7.5rem);
 
   /* ---------- Safe areas (iOS) ---------- */
   --safe-t: env(safe-area-inset-top, 0px);
@@ -92,7 +98,6 @@
   --safe-r: env(safe-area-inset-right, 0px);
 
   /* ---------- Camadas ---------- */
-  --z-content: 0;
   --z-sticky: 10;
   --z-header: 20;
   --z-fab: 30;
@@ -103,6 +108,34 @@
 
 @media (min-width: 1024px) {
   :root {
-    --header-h: 72px;
+    --header-h: 76px;
   }
+}
+
+/* ============================================================
+   Inversão: blocos escuros dentro da página clara.
+   Em vez de duplicar regra por regra, a seção escura remapeia
+   os tokens de texto e borda — tudo dentro dela se adapta.
+   ============================================================ */
+
+.lk-dark {
+  /* ATENÇÃO: valores literais, nunca var() de um token redefinido aqui.
+     `--lk-paper: var(--lk-ink)` resolveria para o --lk-ink NOVO (claro),
+     deixando fundo e texto da mesma cor. */
+  --lk-paper: #16181a;
+  --lk-sand: #1d2023;
+  --lk-sand-2: #24282c;
+  --lk-line: #2e3236;
+  --lk-line-forte: #3c4146;
+  --lk-ink: #f3f4f5;
+  --lk-ash: #9b9ea3;
+  --lk-ash-claro: #7d8085;
+  --lk-gold: #d9b874;
+  --lk-gold-wash: rgba(184, 137, 59, 0.14);
+  --lk-danger: #ef8c82;
+  --sh-2: 0 20px 48px -16px rgba(0, 0, 0, 0.7);
+  --sh-3: 0 20px 48px -16px rgba(0, 0, 0, 0.7);
+
+  background: var(--lk-paper);
+  color: var(--lk-ash);
 }

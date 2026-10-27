@@ -17,6 +17,7 @@ export function Processo() {
   return (
     <Section
       id="processo"
+      className="lk-section--sand"
       eyebrow="Como funciona"
       titulo={
         <>
@@ -24,7 +25,7 @@ export function Processo() {
         </>
       }
       lead="Você sabe onde o seu projeto está em cada semana. Sem terceirizar o que importa."
-      className="lk-cv"
+      
     >
       <div className={`lk-proc ${visible ? 'is-visible' : ''}`.trim()} ref={ref}>
         <div className="lk-proc__trilho" aria-hidden="true">

@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import { CATEGORIAS, PROJETOS, type CategoriaProjeto } from '../../data/projetos';
 import { scrollToSection } from '../../hooks';
 import { num } from '../../lib/format';
-import { GalpaoIso } from '../art/GalpaoIso';
+import { IMG_PROJETOS } from '../../data/imagens';
+import { Foto } from '../ui/Foto';
 import { IconArrow, IconChevron } from '../icons';
 import { Button, Modal, Reveal, Section } from '../ui';
 
@@ -32,7 +33,7 @@ export function Projetos() {
         </>
       }
       lead="Uma amostra do que sai da fábrica e vai pro terreno."
-      className="lk-cv"
+      
     >
       <div className="lk-filtros" role="group" aria-label="Filtrar projetos por categoria">
         {CATEGORIAS.map((c) => (
@@ -68,11 +69,10 @@ export function Projetos() {
                 aria-haspopup="dialog"
               >
                 <span className="lk-projeto__arte">
-                  <GalpaoIso
-                    modulos={p.arte.modulos}
-                    altura={p.arte.altura}
-                    tom={p.arte.tom}
-                    alt={`Ilustração isométrica do projeto ${p.nome}`}
+                  <Foto
+                    img={IMG_PROJETOS[p.id]}
+                    className="lk-projeto__foto"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   />
                   <span className="lk-projeto__tag lk-mono">{p.ano}</span>
                 </span>
@@ -130,12 +130,7 @@ export function Projetos() {
         {atual && (
           <>
             <div className="lk-projeto__hero">
-              <GalpaoIso
-                modulos={atual.arte.modulos}
-                altura={atual.arte.altura}
-                tom={atual.arte.tom}
-                alt={`Ilustração isométrica do projeto ${atual.nome}`}
-              />
+              <Foto img={IMG_PROJETOS[atual.id]} sizes="(min-width: 768px) 680px, 100vw" />
             </div>
             <p className="lk-modal__p">{atual.descricao}</p>
             <dl className="lk-ficha">

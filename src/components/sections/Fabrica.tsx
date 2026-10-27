@@ -1,11 +1,12 @@
 import { SELOS_FABRICA } from '../../data/conteudo';
-import { FabricaCena } from '../art/FabricaCena';
+import { IMG } from '../../data/imagens';
+import { Foto } from '../ui/Foto';
 import { IconCheck } from '../icons';
 import { Eyebrow, Reveal } from '../ui';
 
 export function Fabrica() {
   return (
-    <section id="fabrica" className="lk-section lk-fabrica lk-cv" aria-labelledby="fabrica-titulo">
+    <section id="fabrica" className="lk-section lk-fabrica lk-dark" aria-labelledby="fabrica-titulo">
       <div className="lk-container lk-fabrica__inner">
         <Reveal className="lk-fabrica__texto" efeito="left">
           <Eyebrow>A fábrica</Eyebrow>
@@ -37,7 +38,7 @@ export function Fabrica() {
         </Reveal>
 
         <Reveal className="lk-fabrica__arte" efeito="right" delay={1}>
-          <FabricaCena />
+          <Foto img={IMG.fabrica} sizes="(min-width: 1024px) 50vw, 100vw" />
         </Reveal>
       </div>
     </section>

@@ -32,6 +32,7 @@ export function Comparativo() {
   return (
     <Section
       id="vantagens"
+      className="lk-section--sand"
       eyebrow="Comparativo"
       titulo={
         <>
@@ -39,7 +40,7 @@ export function Comparativo() {
         </>
       }
       lead="Não é questão de gosto. É prazo, vão, peso de fundação e previsibilidade de orçamento."
-      className="lk-cv"
+      
     >
       <Reveal className="lk-toggle" delay={1}>
         <div className="lk-toggle__grupo" role="group" aria-label="Cenário de comparação">
