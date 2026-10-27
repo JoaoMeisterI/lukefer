@@ -1,0 +1,370 @@
+/* ============================================================
+   LUKEFER — Utilidades, layout e sistema de revelação
+   ============================================================ */
+
+/* ---------- Container ---------- */
+
+.lk-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: max(var(--gutter), var(--safe-l));
+  padding-inline-end: max(var(--gutter), var(--safe-r));
+}
+
+/* ---------- Seção ---------- */
+
+.lk-section {
+  position: relative;
+  padding-block: var(--section-pad);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+.lk-section--tight {
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.lk-section__head {
+  max-width: 68ch;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.lk-section__head--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.lk-lead {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-lead);
+  color: var(--lk-silver-400);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.lk-section__head--center .lk-lead {
+  margin-inline: auto;
+}
+
+/* ---------- Eyebrow ---------- */
+
+.lk-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lk-gold-500);
+}
+
+.lk-eyebrow::before {
+  content: '';
+  width: 0;
+  height: 1px;
+  background: var(--lk-gold-500);
+  transition: width var(--d-enter) var(--ease-out-expo) 120ms;
+}
+
+.lk-eyebrow.is-visible::before,
+.is-visible .lk-eyebrow::before {
+  width: 32px;
+}
+
+.lk-eyebrow--center {
+  justify-content: center;
+}
+
+/* ---------- Grifo dourado ---------- */
+
+.lk-gold {
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* fallback caso background-clip:text falhe */
+  -webkit-text-fill-color: transparent;
+  /* a caixa de clip corta o último glifo em fontes com sidebearing negativo;
+     a folga é devolvida pela margem negativa, então o layout não muda */
+  padding-inline-end: 0.08em;
+  margin-inline-end: -0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .lk-gold {
+    color: var(--lk-gold-500);
+    -webkit-text-fill-color: currentColor;
+    background: none;
+  }
+}
+
+/* ---------- Mono ---------- */
+
+.lk-mono {
+  font-family: var(--ff-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* ---------- Revelação no scroll ---------- */
+
+.reveal,
+.reveal-l,
+.reveal-r,
+.reveal-scale {
+  opacity: 0;
+  transition:
+    opacity var(--d-enter) var(--ease-out-expo),
+    transform var(--d-enter) var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.reveal {
+  transform: translate3d(0, 24px, 0);
+}
+.reveal-l {
+  transform: translate3d(-24px, 0, 0);
+}
+.reveal-r {
+  transform: translate3d(24px, 0, 0);
+}
+.reveal-scale {
+  transform: scale(0.96);
+}
+
+.reveal.is-visible,
+.reveal-l.is-visible,
+.reveal-r.is-visible,
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-l,
+  .reveal-r,
+  .reveal-scale {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Texturas de fundo ---------- */
+
+.lk-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(58, 64, 71, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(58, 64, 71, 0.5) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.22;
+  -webkit-mask-image: radial-gradient(100% 70% at 50% 0%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(100% 70% at 50% 0%, #000 0%, transparent 75%);
+}
+
+.lk-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--grad-vignette);
+}
+
+.lk-hairline {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--lk-steel-700) 20%, var(--lk-steel-700) 80%, transparent);
+}
+
+/* ---------- Botões ---------- */
+
+.lk-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 48px;
+  padding: 0 var(--sp-6);
+  border-radius: var(--r-full);
+  font-family: var(--ff-body);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--d-micro) var(--ease-snap),
+    border-color var(--d-micro) var(--ease-snap),
+    color var(--d-micro) var(--ease-snap),
+    box-shadow var(--d-micro) var(--ease-snap),
+    filter var(--d-micro) var(--ease-snap),
+    transform 80ms ease-out,
+    opacity var(--d-micro) var(--ease-snap);
+}
+
+.lk-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.lk-btn--primary {
+  background: var(--grad-gold);
+  color: var(--lk-ink);
+  box-shadow: var(--sh-2);
+}
+
+.lk-btn--secondary {
+  border: 1px solid var(--lk-steel-700);
+  color: var(--lk-white);
+  background: rgba(26, 29, 33, 0.5);
+}
+
+.lk-btn--ghost {
+  color: var(--lk-silver-200);
+  padding-inline: var(--sp-4);
+}
+
+.lk-btn--whatsapp {
+  background: #1fa855;
+  color: #fff;
+  box-shadow: var(--sh-2);
+}
+
+.lk-btn--sm {
+  min-height: 42px;
+  padding: 0 var(--sp-5);
+  font-size: var(--fs-sm);
+}
+
+.lk-btn--block {
+  width: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lk-btn--primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+    box-shadow: var(--sh-gold);
+  }
+  .lk-btn--secondary:hover:not(:disabled) {
+    border-color: var(--lk-gold-700);
+    background: var(--lk-steel-900);
+  }
+  .lk-btn--ghost:hover:not(:disabled) {
+    color: var(--lk-white);
+  }
+  .lk-btn--whatsapp:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+}
+
+.lk-btn__spinner {
+  width: 16px;
+  height: 16px;
+  animation: lk-spin 700ms linear infinite;
+}
+
+@keyframes lk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Card ---------- */
+
+.lk-card {
+  position: relative;
+  background: var(--lk-graphite);
+  border: 1px solid var(--lk-steel-700);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  transition:
+    border-color 220ms var(--ease-snap),
+    background-color 220ms var(--ease-snap);
+  overflow: hidden;
+}
+
+.lk-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--grad-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--ease-out-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lk-card--interactive:hover {
+    border-color: var(--lk-gold-700);
+    background: var(--lk-steel-900);
+  }
+  .lk-card--interactive:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.lk-card--interactive:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Pílula ---------- */
+
+.lk-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--lk-steel-700);
+  border-radius: var(--r-full);
+  background: rgba(18, 20, 23, 0.7);
+  font-size: var(--fs-sm);
+  color: var(--lk-silver-200);
+}
+
+.lk-pill--gold {
+  border-color: rgba(200, 164, 92, 0.35);
+  color: var(--lk-gold-300);
+  background: rgba(92, 71, 32, 0.18);
+}
+
+/* ---------- Grid helpers ---------- */
+
+.lk-grid {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+@media (min-width: 640px) {
+  .lk-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lk-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lk-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Performance: seções fora da dobra ----------
+   `content-visibility: auto` foi avaliado e DESCARTADO: ele faz o
+   getBoundingClientRect de seções ainda não renderizadas usar o tamanho
+   intrínseco estimado, o que erra o destino da navegação por âncora numa
+   página única. A classe fica como gancho de layout. */
+
+.lk-cv {
+  contain: layout style;
+}
